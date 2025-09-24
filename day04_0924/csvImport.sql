@@ -1,0 +1,65 @@
+CREATE TABLE Category (
+	CategoryID INT AUTO_INCREMENT PRIMARY key NOT NULL,
+	CategoryName VARCHAR(50),
+	DESCRIPTION VARCHAR(100)
+);
+
+CREATE TABLE Customers (
+	CustomerID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	CustomerName VARCHAR(50),
+	ContactName	VARCHAR(50),
+	Address	VARCHAR(50),
+	City VARCHAR(50),
+	PostalCode VARCHAR(50),
+	Country VARCHAR(50)
+);
+
+CREATE TABLE Employees (
+	EmployeeID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	LastName	VARCHAR(50),
+	FirstName VARCHAR(50),
+	BirthDate DATE,
+	Photo VARCHAR(50),
+	Notes TEXT
+);
+
+CREATE TABLE OrderDetails (
+	OrderDetailID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	OrderID INT,
+	ProductID INT,
+	Quantity int
+);
+
+CREATE TABLE Orders (
+	OrderID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	CustomerID INT,
+	EmployeeID INT,
+	OrderDate DATE,
+	ShipperID int
+);
+
+CREATE TABLE Products (
+	ProductID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	ProductName	VARCHAR(50),
+	SupplierID	INT,
+	CategoryID	INT,
+	Unit	VARCHAR(50),
+	Price DECIMAL(10,2)
+);
+
+CREATE TABLE Shippers (
+	ShipperID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	ShipperName VARCHAR(50),
+	Phone VARCHAR(50)
+);
+
+CREATE TABLE Suppliers (
+	SupplierID INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	SupplierName VARCHAR(50),
+	ContactName	VARCHAR(50),
+	Address VARCHAR(50),
+	City VARCHAR(50),
+	PostalCode VARCHAR(50),
+	Country VARCHAR(50),
+	Phone VARCHAR(50)
+);

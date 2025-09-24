@@ -72,3 +72,75 @@ SELECT product FROM orders;
 SELECT NAME FROM users
 UNION ALL
 SELECT product FROM orders;
+
+ -- group by
+CREATE TABLE sales(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	product VARCHAR(50),
+	category VARCHAR(50),
+	quantity INT,
+	price DECIMAL(10,2),
+	sale_date DATE
+);
+
+INSERT INTO sales(product, category, quantity, price, sale_date) VALUES
+('노트북','전자제품',5,1000000,'2024-06-01'),
+('스마트폰','전자제품',10,800000,'2024-06-02'),
+('책상','가구',3,200000,'2024-06-01'),
+('의자','가구',7,100000,'2024-06-02'),
+('책상','가구',2,200000,'2024-06-03');
+
+SELECT category, 
+	SUM(quantity) AS total_quantity,
+	SUM(quantity * price) AS total_sales
+FROM sales
+GROUP BY category;
+
+ -- having
+SELECT category,
+	SUM(quantity) AS total_quantity,
+	SUM(quantity * price) AS total_sales
+FROM sales
+GROUP BY category
+HAVING total_sales > 1000000;
+
+ -- exists
+SELECT NAME
+FROM users u
+WHERE EXISTS (
+	SELECT 1 FROM orders o WHERE o.user_id = u.id
+);
+
+ -- any
+SELECT product, price
+FROM sales
+WHERE price > ANY (
+	SELECT price FROM sales WHERE category = '전자제품'
+	);
+	
+ -- all
+SELECT product, price
+FROM sales
+WHERE price > ALL (
+	SELECT price FROM sales WHERE category = '가구');
+	
+ -- case
+SELECT product,
+	case
+		when quantity < 5 then '소량'
+		when quantity BETWEEN 5 AND 10 then '중량'
+		ELSE '대량'
+	END AS quantity_level
+FROM sales;
+
+ -- ifnull()
+ALTER TABLE users
+ADD COLUMN phone CHAR(13);
+ 
+SELECT NAME, IFNULL(phone,'전화번호 없음') AS phonusersuserse_number
+FROM users;
+
+ -- coalesce()
+SELECT NAME,
+	COALESCE(phone, email, '연락처 없음') AS contact_info
+FROM users;
